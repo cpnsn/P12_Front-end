@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import DateInput from '../components/DateInput'
+import DropdownSelect from "../components/DropdownSelect";
 import states from "../data/states.json";
 
-export default function EmployeeForm() {
+export default function Home() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    dateOfBirth: "",
-    startDate: "",
+    dateOfBirth: null,
+    startDate: null,
     street: "",
     city: "",
     state: "",
@@ -14,11 +16,35 @@ export default function EmployeeForm() {
     department: "",
   });
 
+  const stateOptions = states.map((s) => ({
+    value: s.abbreviation,
+    label: s.name,
+  }));
+
+  const departmentOptions = [
+    { value: "Sales", label: "Sales" },
+    { value: "Marketing", label: "Marketing" },
+    { value: "Engineering", label: "Engineering" },
+    { value: "Human Resources", label: "Human Resources" },
+    { value: "Legal", label: "Legal" },
+  ];
+
   const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+//   const handleDateChange = (field, date) => {
+//     setFormData(prev => ({ ...prev, [field]: date }));
+//   };
+
+  const handleDateChange = (field, date) => {
+    if (date) {
+      const formattedDate = date.toLocaleDateString("en-US");
+      setFormData(prev => ({ ...prev, [field]: formattedDate }));
+    }
   };
 
   const saveEmployee = () => {
@@ -38,47 +64,82 @@ export default function EmployeeForm() {
         <h2>Create Employee</h2>
         <form action="#" id="create-employee">
           <label htmlFor="firstName">First Name</label>
-          <input type="text" id="firstName" value={formData.firstName} onChange={handleChange}/>
+          <input
+            type="text"
+            id="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+          />
 
           <label htmlFor="lastName">Last Name</label>
-          <input type="text" id="lastName" value={formData.lastName} onChange={handleChange}/>
+          <input
+            type="text"
+            id="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+          />
 
-          <label htmlFor="dateOfBirth">Date of Birth</label>
-          <input id="dateOfBirth" type="text" value={formData.dateOfBirth} onChange={handleChange}/>
+          <DateInput
+            id="dateOfBirth"
+            label="Date of Birth"
+            selectedDate={formData.dateOfBirth}
+            onChange={handleDateChange}
+          />
 
-          <label htmlFor="startDate">Start Date</label>
-          <input id="startDate" type="text" value={formData.startDate} onChange={handleChange}/>
+          <DateInput
+            id="startDate"
+            label="Start Date"
+            selectedDate={formData.startDate}
+            onChange={handleDateChange}
+          />
 
           <fieldset className="address">
             <legend>Address</legend>
 
             <label htmlFor="street">Street</label>
-            <input id="street" type="text" value={formData.street} onChange={handleChange}/>
+            <input
+              id="street"
+              type="text"
+              value={formData.street}
+              onChange={handleChange}
+            />
 
             <label htmlFor="city">City</label>
-            <input id="city" type="text" value={formData.city} onChange={handleChange}/>
+            <input
+              id="city"
+              type="text"
+              value={formData.city}
+              onChange={handleChange}
+            />
 
-            <label htmlFor="state">State</label>
-            <select name="state" id="state" value={formData.state} onChange={handleChange}>
-                {states.map((state) => (
-                    <option key={state.abbreviation} value={state.abbreviation}>
-                        {state.name}
-                    </option>
-                ))}
-            </select>
+            <DropdownSelect
+              id="state"
+              label="State"
+              options={stateOptions}
+              value={formData.state}
+              onChange={(id, value) =>
+                setFormData((prev) => ({ ...prev, [id]: value }))
+              }
+            />
 
             <label htmlFor="zipCode">Zip Code</label>
-            <input id="zipCode" type="number" value={formData.zipCode} onChange={handleChange}/>
+            <input
+              id="zipCode"
+              type="number"
+              value={formData.zipCode}
+              onChange={handleChange}
+            />
           </fieldset>
 
-          <label htmlFor="department">Department</label>
-          <select name="department" id="department" value={formData.department} onChange={handleChange}>
-            <option>Sales</option>
-            <option>Marketing</option>
-            <option>Engineering</option>
-            <option>Human Resources</option>
-            <option>Legal</option>
-          </select>
+          <DropdownSelect
+            id="department"
+            label="Department"
+            options={departmentOptions}
+            value={formData.department}
+            onChange={(id, value) =>
+              setFormData((prev) => ({ ...prev, [id]: value }))
+            }
+          />
         </form>
         <button onClick={saveEmployee}>Save</button>
       </div>
