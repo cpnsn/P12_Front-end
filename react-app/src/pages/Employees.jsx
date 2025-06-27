@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import EmployeeTable from "../components/EmployeeTable";
 
 export default function Employees() {
@@ -6,12 +7,7 @@ export default function Employees() {
     document.title = "HRnet - Current Employees";
   }, []);
 
-  const [employees, setEmployees] = useState([]);
-
-  useEffect(() => {
-    const storedEmployees = JSON.parse(localStorage.getItem("employees")) || [];
-    setEmployees(storedEmployees);
-  }, []);
+  const employees = useSelector((state) => state.employees.list);
 
   const columns = [
     { name: "First Name", selector: row => row.firstName, sortable: true },

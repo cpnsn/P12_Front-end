@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import DateInput from '../components/DateInput'
+import { Modal } from "react-modal-oc-project";
+
+import DateInput from "../components/DateInput";
 import DropdownSelect from "../components/DropdownSelect";
+import { useDispatch } from "react-redux";
+import { addEmployee } from "../redux/employeesSlice";
 import states from "../data/states.json";
 
 export default function Home() {
@@ -36,21 +40,17 @@ export default function Home() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-//   const handleDateChange = (field, date) => {
-//     setFormData(prev => ({ ...prev, [field]: date }));
-//   };
-
   const handleDateChange = (field, date) => {
     if (date) {
       const formattedDate = date.toLocaleDateString("en-US");
-      setFormData(prev => ({ ...prev, [field]: formattedDate }));
+      setFormData((prev) => ({ ...prev, [field]: formattedDate }));
     }
   };
 
+  const dispatch = useDispatch();
+
   const saveEmployee = () => {
-    const employees = JSON.parse(localStorage.getItem("employees")) || [];
-    employees.push(formData);
-    localStorage.setItem("employees", JSON.stringify(employees));
+    dispatch(addEmployee(formData));
     setShowModal(true);
   };
 
@@ -144,9 +144,11 @@ export default function Home() {
         <button onClick={saveEmployee}>Save</button>
       </div>
       {showModal && (
-        <div id="confirmation" className="modal">
-          Employee Created!
-        </div>
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+          <p className="text-center text-green-600 font-semibold">
+            Employee Created!
+          </p>
+        </Modal>
       )}
     </>
   );
