@@ -55,93 +55,124 @@ export default function Home() {
   };
 
   return (
-    <>
-      <div className="title">
+    <div className="mx-auto my-[2%]">
+      <div className="title text-5xl font-bold">
         <h1>HRnet</h1>
       </div>
-      <div className="container">
-        <a href="employee-list.html">View Current Employees</a>
-        <h2>Create Employee</h2>
-        <form action="#" id="create-employee">
-          <label htmlFor="firstName">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-          />
+      <div className="content-container">
+        <div className="bg-slate-600 text-white font-medium my-6 py-2 px-5 rounded-md">
+          <a href="employee-list.html">View Current Employees</a>
+        </div>
+        <div className="text-slate-600 w-[30%] bg-slate-100 rounded-lg pt-4 pb-6 px-10">
+          <h2 className="text-xl mb-4 font-bold text-center">
+            Create Employee
+          </h2>
+          <form action="#" id="create-employee">
+            <div className="flex justify-between">
+              <div className="w-[47%]">
+                <label htmlFor="firstName">First Name</label>
+                <input
+                  className="outline-none rounded border border-slate-400 p-2 w-full"
+                  type="text"
+                  id="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="w-[47%]">
+                <label htmlFor="lastName">Last Name</label>
+                <input
+                  className="outline-none rounded border border-slate-400 p-2 w-full"
+                  type="text"
+                  id="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
 
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-          />
+            <div className="flex justify-between">
+              <DateInput
+                id="dateOfBirth"
+                label="Date of Birth"
+                selectedDate={formData.dateOfBirth}
+                onChange={handleDateChange}
+              />
 
-          <DateInput
-            id="dateOfBirth"
-            label="Date of Birth"
-            selectedDate={formData.dateOfBirth}
-            onChange={handleDateChange}
-          />
+              <DateInput
+                id="startDate"
+                label="Start Date"
+                selectedDate={formData.startDate}
+                onChange={handleDateChange}
+              />
+            </div>
 
-          <DateInput
-            id="startDate"
-            label="Start Date"
-            selectedDate={formData.startDate}
-            onChange={handleDateChange}
-          />
+            <div className="mt-8 bg-slate-200 rounded-md p-4">
+              <fieldset className="address">
+                <legend className="">Address</legend>
 
-          <fieldset className="address">
-            <legend>Address</legend>
+                <label htmlFor="street">Street</label>
+                <input
+                  className="outline-none rounded border border-slate-400 p-2 w-[70%]"
+                  id="street"
+                  type="text"
+                  value={formData.street}
+                  onChange={handleChange}
+                />
 
-            <label htmlFor="street">Street</label>
-            <input
-              id="street"
-              type="text"
-              value={formData.street}
-              onChange={handleChange}
-            />
+                <div className="flex justify-between">
+                  <div className="w-[60%]">
+                    <label htmlFor="city">City</label>
+                    <input
+                      className="outline-none rounded border border-slate-400 p-2 w-full"
+                      id="city"
+                      type="text"
+                      value={formData.city}
+                      onChange={handleChange}
+                    />
+                  </div>
 
-            <label htmlFor="city">City</label>
-            <input
-              id="city"
-              type="text"
-              value={formData.city}
-              onChange={handleChange}
-            />
+                  <div className="w-[34%]">
+                    <label htmlFor="zipCode">Zip Code</label>
+                    <input
+                      className="outline-none rounded border border-slate-400 p-2 w-full"
+                      id="zipCode"
+                      type="number"
+                      value={formData.zipCode}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
 
-            <DropdownSelect
-              id="state"
-              label="State"
-              options={stateOptions}
-              value={formData.state}
-              onChange={(id, value) =>
-                setFormData((prev) => ({ ...prev, [id]: value }))
-              }
-            />
+                <DropdownSelect
+                  id="state"
+                  label="State"
+                  options={stateOptions}
+                  value={formData.state}
+                  onChange={(id, value) =>
+                    setFormData((prev) => ({ ...prev, [id]: value }))
+                  }
+                />
+              </fieldset>
 
-            <label htmlFor="zipCode">Zip Code</label>
-            <input
-              id="zipCode"
-              type="number"
-              value={formData.zipCode}
-              onChange={handleChange}
-            />
-          </fieldset>
-
-          <DropdownSelect
-            id="department"
-            label="Department"
-            options={departmentOptions}
-            value={formData.department}
-            onChange={(id, value) =>
-              setFormData((prev) => ({ ...prev, [id]: value }))
-            }
-          />
-        </form>
-        <button onClick={saveEmployee}>Save</button>
+              <DropdownSelect
+                id="department"
+                label="Department"
+                options={departmentOptions}
+                value={formData.department}
+                onChange={(id, value) =>
+                  setFormData((prev) => ({ ...prev, [id]: value }))
+                }
+              />
+            </div>
+          </form>
+        </div>
+        <button
+          className="bg-emerald-300 text-emerald-900 font-bold py-2 px-12 mt-6 rounded-md"
+          onClick={saveEmployee}
+        >
+          Save
+        </button>
       </div>
       {showModal && (
         <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
@@ -150,6 +181,6 @@ export default function Home() {
           </p>
         </Modal>
       )}
-    </>
+    </div>
   );
 }
