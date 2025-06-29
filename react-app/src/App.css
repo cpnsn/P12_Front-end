@@ -24,3 +24,8 @@ label {
 .react-datepicker-wrapper {
   width: 100%;
 }
+
+button[aria-label="First Page"],
+button[aria-label="Last Page"] {
+  display: none !important;
+}

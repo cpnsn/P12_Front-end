@@ -23,9 +23,11 @@ export default function Employees() {
 
   return (
     <div id="employee-div" className="content-container w-[80%] mx-auto my-[2%]">
-      <h1>Current Employees</h1>
+      <h1 className="text-5xl font-bold">Current Employees</h1>
       <EmployeeTable employees={employees} />
-      <a href="index.html">Home</a>
+      <div className="bg-slate-600 text-white font-medium my-6 py-2 px-5 rounded-md">
+        <a href="index.html">Home</a>
+      </div>
     </div>
   );
 }
