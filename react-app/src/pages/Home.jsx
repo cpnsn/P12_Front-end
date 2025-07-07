@@ -8,7 +8,7 @@ import { addEmployee } from "../redux/employeesSlice";
 import states from "../data/states.json";
 
 export default function Home() {
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     firstName: "",
     lastName: "",
     dateOfBirth: null,
@@ -18,7 +18,9 @@ export default function Home() {
     state: "",
     zipCode: "",
     department: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormState);
 
   const stateOptions = states.map((s) => ({
     value: s.abbreviation,
@@ -47,11 +49,38 @@ export default function Home() {
     }
   };
 
+  const requiredFields = [
+    "firstName",
+    "lastName",
+    "dateOfBirth",
+    "startDate",
+    "street",
+    "city",
+    "state",
+    "zipCode",
+    "department",
+  ];
+
+  const validateForm = () => {
+    for (let field of requiredFields) {
+      const value = formData[field];
+      if (!value || (typeof value === "string" && value.trim() === "")) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const dispatch = useDispatch();
 
   const saveEmployee = () => {
+    if (!validateForm()) {
+      alert("Please fill all fields.");
+      return;
+    }
     dispatch(addEmployee(formData));
     setShowModal(true);
+    setFormData(initialFormState);
   };
 
   return (
