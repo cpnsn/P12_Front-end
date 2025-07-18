@@ -138,7 +138,7 @@ export default function Home() {
 
             <div className="mt-8 bg-slate-200 rounded-md p-4">
               <fieldset className="address">
-                <legend className="">Address</legend>
+                <legend className="font-bold">Address</legend>
 
                 <label htmlFor="street">Street</label>
                 <input
@@ -184,6 +184,7 @@ export default function Home() {
                 />
               </fieldset>
 
+            </div>
               <DropdownSelect
                 id="department"
                 label="Department"
@@ -193,7 +194,6 @@ export default function Home() {
                   setFormData((prev) => ({ ...prev, [id]: value }))
                 }
               />
-            </div>
           </form>
         </div>
         <button
