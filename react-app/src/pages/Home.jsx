@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Modal } from "react-modal-oc-project";
 
 import DateInput from "../components/DateInput";
@@ -89,9 +90,12 @@ export default function Home() {
         <h1>HRnet</h1>
       </div>
       <div className="content-container">
-        <div className="bg-slate-600 text-white font-medium my-6 py-2 px-5 rounded-md">
-          <a href="employee-list.html">View Current Employees</a>
-        </div>
+        <Link
+          to="/employee-list.html"
+          className="bg-slate-600 text-white font-medium my-6 py-2 px-5 rounded-md inline-block"
+        >
+          View Current Employees
+        </Link>
         <div className="text-slate-600 2xl:w-[30%] bg-slate-100 rounded-lg pt-4 pb-6 px-10">
           <h2 className="text-xl mb-4 font-bold text-center">
             Create Employee
@@ -183,17 +187,16 @@ export default function Home() {
                   }
                 />
               </fieldset>
-
             </div>
-              <DropdownSelect
-                id="department"
-                label="Department"
-                options={departmentOptions}
-                value={formData.department}
-                onChange={(id, value) =>
-                  setFormData((prev) => ({ ...prev, [id]: value }))
-                }
-              />
+            <DropdownSelect
+              id="department"
+              label="Department"
+              options={departmentOptions}
+              value={formData.department}
+              onChange={(id, value) =>
+                setFormData((prev) => ({ ...prev, [id]: value }))
+              }
+            />
           </form>
         </div>
         <button
